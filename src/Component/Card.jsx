@@ -1,8 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { BsFileEarmarkPdf } from "react-icons/bs";
+import { IoEyeOutline } from "react-icons/io5";
+import { LiaTrademarkSolid } from "react-icons/lia";
 export const Card = ({ setCurrentIndex, index, totalPages, item }) => {
+  const navigate = useNavigate();
   console.log(item, "itemmm");
   const handleIndexChange = (paramIndex) => {
-    setCurrentIndex(paramIndex);
+    // setCurrentIndex(paramIndex);
+    navigate("/viewpdf", { state: { item } });
   };
 
   return (
@@ -11,13 +17,30 @@ export const Card = ({ setCurrentIndex, index, totalPages, item }) => {
         <div className="font-bold text-xl mb-2">{item?.title}</div>
         <p className="text-gray-700 text-base">{item?.description}</p>
 
-        <div className=" pt-4 pb-2">
-          <p className="text-gray-700 text-base">
-            Total Pages: {item?.numberOfPages}
-          </p>
+        <div className="flex flex-row justify-around items-center p-4">
+          <div className=" w-16 flex flex-row justify-around items-center rounded-full bg-blue-100 p-2 ">
+            {" "}
+            <BsFileEarmarkPdf />
+            <p>|</p>
+            <p className="text-gray-700 text-base">{item?.numberOfPages}</p>
+          </div>
+          <div className=" w-16 flex flex-row justify-around items-center rounded-full bg-blue-100 p-2 ">
+            {" "}
+            <LiaTrademarkSolid />
+            <p>|</p>
+            <p className="text-gray-700 text-base">{item?.numberOfPages}</p>
+          </div>
+          <div className=" w-16 flex flex-row justify-around items-center rounded-full bg-blue-100 p-2 ">
+            {" "}
+            <IoEyeOutline />
+            <p>|</p>
+            <p className="text-gray-700 text-base">
+              {item?.numberOfPages * 100}
+            </p>
+          </div>
         </div>
         <button
-          className="bg-blue-500 w-full hover:bg-blue-700 text-white  py-2 px-4 rounded-3xl "
+          className="bg-blue-800 w-full hover:bg-blue-700 text-white  py-2 px-4 rounded-3xl "
           onClick={() => handleIndexChange(index)}
         >
           View document

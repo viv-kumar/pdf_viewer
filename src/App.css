@@ -38,14 +38,15 @@
 }
 
 .cusPos {
-  position: sticky;
-  bottom: 0 !important;
-  left: 80%;
+  position: absolute !important;
+  top: 0 !important;
+  left: 20%;
 }
 
 .cusPo2 {
-  position: sticky;
+  position: fixed;
   bottom: 0 !important;
+  left: 10%;
 }
 @media (max-width: 600px) {
   .cusPos {
