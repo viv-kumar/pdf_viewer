@@ -13,7 +13,7 @@ import { RotatingLines } from "react-loader-spinner";
 const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 2.0;
 
-const Viewer = ({ pdf, documentKey }) => {
+const Viewer = ({ pdf, documentKey, pdfName }) => {
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
   const [scale, setScale] = useState(1.0);
@@ -170,10 +170,45 @@ const Viewer = ({ pdf, documentKey }) => {
     <>
       <div className="relative w-full h-full flex justify-start items-start overflow-hidden">
         {/* Main Viewer */}
+        <div className="border-r-2 border-gray-400 px-3 w-72  h-full hidden lg:block">
+          <div className="px-2 py-3 border-b-2 text-center font-semibold text-lg">
+            {pdfName}
+          </div>
+          <div className="h-full overflow-auto">
+            <Document
+              className="flex flex-col justify-start items-center overflow-auto h-screen"
+              file={pdf}
+              onLoadSuccess={onDocLoad}
+              onLoadError={onDocLoadError}
+            >
+              {Array(totalPages)
+                .fill()
+                .map((_, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleBookmarkClick(index + 1)}
+                    className={`border-[4px] cursor-pointer relative rounded my-2 ${
+                      pageNumber === index + 1 ? "border-blue-800" : ""
+                    }`}
+                  >
+                    <Page
+                      height={180}
+                      pageNumber={index + 1}
+                      scale={0.5}
+                    ></Page>
+                    <p className="text-center">{index + 1}</p>
+                  </div>
+                ))}
+            </Document>
+          </div>
+        </div>
         <div className="w-full h-full overflow-auto">
           <div className="w-full h-full bg-slate-100 relative">
             {/* PDF Viewer with all pages scrollable */}
+
             <div className="w-full relative bg-slate-200 overflow-auto flex flex-col items-center">
+              {/* Sidebar */}
+
               <div className="flex-grow border-10">
                 <Document
                   file={pdf}
@@ -206,48 +241,54 @@ const Viewer = ({ pdf, documentKey }) => {
             </div>
 
             {!loading && (
-              <div className="w-full lg:w-[400px] fixed top-1  right-0 rounded-sm bg-blue-800 z-20  sm:w-full sm:max-w-xs">
+              <div className="w-full lg:w-[400px] fixed top-1  right-0 rounded-sm bg-gray-50 z-20  sm:w-full sm:max-w-xs">
                 <div className="flex flex-row justify-between items-center p-3 sm:p-3">
-                  <p className="text-md text-gray-50 sm:text-base">
+                  <p className="text-md text-gray-800 sm:text-base">
                     Bookmarks page:
                   </p>
                   <RxDropdownMenu
                     onClick={handleOpenBookmark}
-                    className="text-gray-50 sm:text-lg cursor-pointer"
+                    className="text-gray-800 sm:text-lg cursor-pointer"
                   />
                 </div>
 
-                {openBookMark && (
-                  <ul className="mt-2 bg-gray-50">
-                    {bookmarks.map((page, index) => (
-                      <li
-                        key={index}
-                        className="flex justify-between items-center my-1"
-                      >
-                        <div className="w-full text-sm sm:text-base">
-                          <span>Page: </span>
-                          <span>{page}</span>
-                        </div>
-                        <button
-                          onClick={() => handleBookmarkClick(page)}
-                          className="bg-blue-500 w-16 sm:w-full hover:bg-blue-700 text-white py-1 px-2 rounded-md text-xs sm:text-sm"
+                {openBookMark &&
+                  (bookmarks.length > 0 ? (
+                    <ul className="mt-2 bg-gray-50">
+                      {bookmarks.map((page, index) => (
+                        <li
+                          key={index}
+                          className="flex justify-between items-center my-1"
                         >
-                          Go to
-                        </button>
-                        <MdDeleteOutline
-                          onClick={() => removeBookmark(page)}
-                          className="text-base cursor-pointer size-12 ml-2"
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                          <div className="w-full text-sm sm:text-base">
+                            <span>Page: </span>
+                            <span>{page}</span>
+                          </div>
+                          <button
+                            onClick={() => handleBookmarkClick(page)}
+                            className="bg-blue-500 w-16 sm:w-full hover:bg-blue-700 text-white py-1 px-2 rounded-md text-xs sm:text-sm"
+                          >
+                            Go to
+                          </button>
+                          <MdDeleteOutline
+                            onClick={() => removeBookmark(page)}
+                            className="text-base cursor-pointer size-12 ml-2"
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-center text-blue-800">Page not added</p>
+                  ))}
               </div>
             )}
 
             {/* Bottom navigation and zoom controls */}
             {!loading && (
-              <div className="sticky bottom-0 left-[35%] bg-blue-500 py-2 px-4 lg:w-[450px] lg:rounded-3xl sm:w-full z-50">
+              <div
+                id="customWidth"
+                className="sticky bottom-0 left-[33%] bg-blue-800 py-2 px-4 lg:w-[450px] rounded-3xl  z-50"
+              >
                 <div className="flex items-center max-w-3xl justify-between">
                   <div className="flex justify-center items-center">
                     <div className="flex items-center p-1 gap-1">

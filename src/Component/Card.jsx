@@ -13,7 +13,7 @@ export const Card = ({ setCurrentIndex, index, totalPages, item }) => {
 
   return (
     <div className="max-w-sm rounded-xl overflow-hidden mr-2 bg-white">
-      <div className="px-6 py-4">
+      <div className="px-6 py-4 h-full flex justify-between flex-col">
         <div className="font-bold text-xl mb-2">{item?.title}</div>
         <p className="text-gray-700 text-base">{item?.description}</p>
 

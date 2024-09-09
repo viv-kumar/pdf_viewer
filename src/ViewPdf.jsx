@@ -7,7 +7,11 @@ const ViewPdf = () => {
   const { item } = state;
   return (
     <div className=" relative h-screen w-full">
-      <Viewer pdf={item?.pdfLink} documentKey={item?._id} />
+      <Viewer
+        pdf={item?.pdfLink}
+        documentKey={item?._id}
+        pdfName={item?.title}
+      />
     </div>
   );
 };

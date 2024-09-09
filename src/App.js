@@ -5,22 +5,40 @@ import React, { useState, useEffect } from "react";
 // import pdf3 from "./pdf/zucoltest.pdf";
 import { Card } from "./Component/Card";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import "./App.css";
+import "./App.css";
 import MainPage from "./MainPage";
 import ViewPdf from "./ViewPdf";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const notify = (message) => toast(message);
   useEffect(() => {
     const fetchPdf = async () => {
-      const response = await fetch("https://pfd-uploader.onrender.com/pdfs");
-      const Data = await response.json();
-      console.log(data, "dataaaa");
-      setData(Data);
-      setLoading(true);
+      try {
+        const response = await fetch("https://pfd-uploader.onrender.com/pdfs");
+
+        // Check if response is ok (status code 200-299)
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const Data = await response.json();
+        console.log(Data, "dataaaa");
+        setData(Data);
+        setLoading(true);
+      } catch (error) {
+        console.error("Error fetching PDF:", error);
+        notify("Error in the api");
+        // Handle the error as needed, e.g., show an error message in the UI
+        setLoading(false);
+      }
     };
+
     fetchPdf();
   }, []);
+
   return (
     <Router>
       <Routes>
@@ -32,6 +50,7 @@ function App() {
         />
         <Route path="/viewpdf" element={<ViewPdf />} />
       </Routes>
+      <ToastContainer />
     </Router>
   );
   // return (

@@ -48,8 +48,14 @@
   bottom: 0 !important;
   left: 10%;
 }
+
 @media (max-width: 600px) {
   .cusPos {
     bottom: 57px !important;
+  }
+  #customWidth {
+    width: 360px !important;
+    left: 4% !important;
+    bottom: 10px !important;
   }
 }
