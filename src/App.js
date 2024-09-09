@@ -25,7 +25,7 @@ function App() {
         }
 
         const Data = await response.json();
-        console.log(Data, "dataaaa");
+        // console.log(Data, "dataaaa");
         setData(Data);
         setLoading(true);
       } catch (error) {

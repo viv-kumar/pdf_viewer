@@ -5,7 +5,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { LiaTrademarkSolid } from "react-icons/lia";
 export const Card = ({ setCurrentIndex, index, totalPages, item }) => {
   const navigate = useNavigate();
-  console.log(item, "itemmm");
+  // console.log(item, "itemmm");
   const handleIndexChange = (paramIndex) => {
     // setCurrentIndex(paramIndex);
     navigate("/viewpdf", { state: { item } });
