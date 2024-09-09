@@ -188,7 +188,7 @@ const Viewer = ({ pdf, documentKey, pdfName }) => {
                     key={index}
                     onClick={() => handleBookmarkClick(index + 1)}
                     className={`border-[4px] cursor-pointer relative rounded my-2 ${
-                      pageNumber === index + 1 ? "border-blue-800" : ""
+                      pageNumber === index + 1 ? "border-gray-300" : ""
                     }`}
                   >
                     <Page
