@@ -69,7 +69,7 @@ const MainPage = ({ data, loading, setLoading }) => {
               ))}
             </div>
           ) : (
-            <div className="flex justify-center items-center h-full">
+            <div className="flex justify-center items-center h-screen">
               <RotatingLines
                 type="TailSpin"
                 color="#00BFFF"
